@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Планировщик грузовика 3D</title>
+    <style>body{margin:0;font-family:sans-serif;overflow:hidden}#info{color:#fff;z-index:100;background:#000c;border-radius:8px;width:260px;max-height:90vh;padding:15px;position:absolute;top:20px;left:20px;overflow-y:auto}#cargo-list-panel{color:#fff;z-index:100;background:#000c;border-radius:8px;width:300px;max-height:90vh;padding:15px;position:absolute;top:20px;right:20px;overflow-y:auto}table{border-collapse:collapse;width:100%;margin-top:10px}th,td{text-align:left;border:1px solid #555;padding:5px;font-size:13px}th{background:#333}.delete-btn{color:#fff;cursor:pointer;background:#f33;border:none;border-radius:4px;padding:2px 6px}.delete-btn:hover{background:#c00}input{width:120px;margin:5px 0;padding:5px}button{cursor:pointer;margin-bottom:5px;padding:8px 15px}.mode-btn{color:#fff;cursor:pointer;text-align:center;background:#444;border:1px solid #666;width:48%;margin-bottom:10px;padding:8px 10px;display:inline-block}.mode-btn.active{background:#0078d7;border-color:#0078d7;font-weight:700}.mode-container{justify-content:space-between;display:flex}.hint{color:#aaa;margin-top:-5px;margin-bottom:10px;font-size:12px}.save-btn{color:#fff;background:#28a745;border:none;width:100%;font-weight:700}.load-btn{color:#000;background:#ffc107;border:none;width:100%;margin-top:5px}.clear-btn{color:#fff;background:#dc3545;border:none;width:100%;margin-top:5px}.weight-panel{text-align:center;background:#222;border:1px solid #444;border-radius:8px;margin-top:15px;padding:10px}.weight-title{color:#aaa;margin-bottom:5px;font-size:12px}.weight-value{font-size:20px;font-weight:700}.weight-ok{color:#28a745}.weight-over{color:#f33}.checkbox-container{align-items:center;margin:10px 0;display:flex}.checkbox-container input{cursor:pointer;width:auto;margin-right:8px}</style>
+  <script type="module" crossorigin src="./assets/index-svlABHPe.js"></script>
+</head>
+<body>
+    <div id="info">
+        <h3>Настройки фургона</h3>
+        <label>Длина: <input id="truckL" type="number" value="6.0" step="0.1"></label><br>
+        <label>Ширина: <input id="truckW" type="number" value="2.4" step="0.1"></label><br>
+        <label>Высота: <input id="truckH" type="number" value="2.4" step="0.1"></label><br>
+        <label>Грузоподъёмность (кг): <input id="truckMaxWeight" type="number" value="1500" step="50"></label><br>
+        <button id="createTruck">Создать фургон</button>
+        
+        <hr>
+        <h3>Режим управления</h3>
+        <div class="mode-container">
+            <button id="btnMove" class="mode-btn active">Двигать</button>
+            <button id="btnRotate" class="mode-btn">Вращать</button>
+        </div>
+        <div class="hint">Нажмите <b>R</b> для смены режима</div>
+
+        <hr>
+        <h3>Добавить груз</h3>
+        <label>Д: <input id="boxL" type="number" value="1.0" step="0.1"></label><br>
+        <label>Ш: <input id="boxW" type="number" value="1.0" step="0.1"></label><br>
+        <label>В: <input id="boxH" type="number" value="1.0" step="0.1"></label><br>
+        <label>Вес (кг): <input id="boxWeight" type="number" value="100" step="1"></label><br>
+        <label>Метка: <input id="boxTag" type="text" placeholder="Например: Жидкость"></label><br>
+        
+        <div class="checkbox-container">
+            <input type="checkbox" id="boxIsHazardous">
+            <label for="boxIsHazardous">Опасный груз</label>
+        </div>
+        
+        <!-- Новая галочка для трубы -->
+        <div class="checkbox-container">
+            <input type="checkbox" id="boxIsPipe">
+            <label for="boxIsPipe">Строительный груз (труба)</label>
+        </div>
+
+        <button id="addBox">Добавить груз</button>
+
+        <hr>
+        <h3>Сохранение</h3>
+        <button id="btnSave" class="save-btn">💾 Сохранить</button>
+        <button id="btnLoad" class="load-btn">📂 Загрузить</button>
+        <button id="btnClear" class="clear-btn">🗑️ Очистить всё</button>
+    </div>
+
+    <div id="cargo-list-panel">
+        <h3>Список грузов</h3>
+        <table id="cargo-table">
+            <thead>
+                <tr>
+                    <th>№</th>
+                    <th>Тип/Размеры</th>
+                    <th>Вес</th>
+                    <th>Метка</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody id="cargo-tbody"></tbody>
+        </table>
+
+        <div class="weight-panel">
+            <div class="weight-title">Общий вес</div>
+            <div id="total-weight" class="weight-value weight-ok">0 / 1500 кг</div>
+        </div>
+    </div>
+
+    <div id="canvas-container"></div>
+
+</body>
+</html>
